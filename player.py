@@ -20,7 +20,7 @@ class Player(CircleShape):
         a = self.position + forward * self.radius
         b = self.position - forward * self.radius - right
         c = self.position - forward * self.radius + right
-        print(f"Am I on the screen? -> {self.position}")
+        # print(f"Am I on the screen? -> {self.position}")
         return [a, b, c]
     
     def rotate(self, dt):
