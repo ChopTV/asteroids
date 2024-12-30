@@ -5,7 +5,11 @@ from constants import *
 class Player(CircleShape):
     def __init__(self, x, y):
         super().__init__(x, y, PLAYER_RADIUS)
+        print(f"Player({x}, {y})")
         self.rotation = 0
+        #self.image = pygame.Surface((self.radius*2, self.radius*2), pygame.SRCALPHA)
+        #pygame.draw.polygon(self.image, "white", self.triangle(), width=2)
+        #self.rect = self.image.get_rect(center=(x, y))
 
     # in the player class
     def triangle(self):
@@ -14,6 +18,7 @@ class Player(CircleShape):
         a = self.position + forward * self.radius
         b = self.position - forward * self.radius - right
         c = self.position - forward * self.radius + right
+        print(f"Am I on the screen? -> {self.position}")
         return [a, b, c]
     
     def rotate(self, dt):
