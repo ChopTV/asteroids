@@ -8,6 +8,7 @@ class Player(CircleShape):
         super().__init__(x, y, PLAYER_RADIUS)
         print(f"Player({x}, {y})")
         self.rotation = 0
+        self.timer = 0
         #self.image = pygame.Surface((self.radius*2, self.radius*2), pygame.SRCALPHA)
         #pygame.draw.polygon(self.image, "white", self.triangle(), width=2)
         #self.rect = self.image.get_rect(center=(x, y))
@@ -30,9 +31,13 @@ class Player(CircleShape):
         self.position += forward * PLAYER_SPEED * dt
 
     def shoot(self, dt):
-        pew = Shot(self.position.x, self.position.y, SHOT_RADIUS)
-        position = pygame.Vector2(0, 1).rotate(self.rotation)
-        pew.velocity = position * PLAYER_SHOOT_SPEED
+        if self.timer > 0:
+            print("Can't shoot!")
+        else: 
+            pew = Shot(self.position.x, self.position.y, SHOT_RADIUS)
+            position = pygame.Vector2(0, 1).rotate(self.rotation)
+            pew.velocity = position * PLAYER_SHOOT_SPEED
+            self.timer = PLAYER_SHOOT_COOLDOWN
 
     def update(self, dt):
         keys = pygame.key.get_pressed()
@@ -47,6 +52,8 @@ class Player(CircleShape):
             self.move(-dt)
         if keys[pygame.K_SPACE]:
             self.shoot(dt)
+
+        self.timer -= dt
         
     
     def draw(self, screen):
